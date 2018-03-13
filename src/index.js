@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
 import './index.css';
 import Autosuggest from 'react-autosuggest';
+
+const $ = window.$;
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = (value,cities) => {
