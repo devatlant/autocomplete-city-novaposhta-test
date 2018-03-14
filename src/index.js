@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Autosuggest from 'react-autosuggest';
+import IsolatedScroll from 'react-isolated-scroll';
 
 const $ = window.$;
 
@@ -24,11 +25,11 @@ const getSuggestionValue = suggestion => suggestion.name;
 // Use your imagination to render suggestions.
 const renderSuggestion = suggestion => (
   <div>
-    {suggestion.name}
+    <small>{suggestion.typeCode}</small> <b>{suggestion.name}</b> <small>, {suggestion.region} район, {suggestion.area} область</small>
   </div>
 );
 
-class Example extends React.Component {
+class CitySuggestionComponent extends React.Component {
   constructor() {
     super();
 
@@ -40,7 +41,7 @@ class Example extends React.Component {
     this.state = {
       value: '',
       suggestions: [],
-      isLoading: false,
+      isLoading: true,
       cityRef: undefined
     };
   }
@@ -116,7 +117,7 @@ class Example extends React.Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Type a programming language',
+      placeholder: 'Оберіть місто доставкі',
       value,
       onChange: this.onChange
     };
@@ -127,7 +128,7 @@ class Example extends React.Component {
     		
     	
     	<div>
-	    	<form method="post" action="receive-data">
+    		  { isLoading && <div className="loader">Загрузка...</div> }
 		      <Autosuggest
 		        suggestions={suggestions}
 		        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -136,15 +137,14 @@ class Example extends React.Component {
 		        getSuggestionValue={getSuggestionValue}
 		        renderSuggestion={renderSuggestion}
 		        inputProps={inputProps}
+		        
 		      />
-	      	  { isLoading && <div class="loader">Loading...</div> }
-	      	 <button type="submit"/>
+	      	  
 	      	 <input type="text" name="city-ref" value={cityRef}/> 
-      	  </form>
         </div>
     );
   }
 }
 
 
-ReactDOM.render(<Example />, document.getElementById('root'));
+ReactDOM.render(<CitySuggestionComponent />, document.getElementById('root'));
